@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "apollo-server": "^2.24.0",
     "graphql": "^15.5.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
@@ -25,10 +26,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "nodemon --exec node server.js"
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
