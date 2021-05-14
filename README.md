@@ -5,3 +5,6 @@
 - [x] Arch.
 - [x] Styles
 - [] Login / Sign Up
+- [] Feed
+- [] Profile
+- [] See Hashtag
