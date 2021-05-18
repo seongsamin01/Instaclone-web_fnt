@@ -6,6 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { logUserIn } from "../apollo";
 import AuthLayout from "../components/auth/AuthLayout";
 import BottomBox from "../components/auth/BottomBox";
 import Button from "../components/auth/Button";
@@ -23,7 +24,6 @@ const FacebookLogin = styled.div`
     font-weight: 600;
   }
 `;
-
 const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -33,7 +33,6 @@ const LOGIN_MUTATION = gql`
     }
   }
 `;
-
 function Login() {
   const {
     register,
@@ -42,6 +41,7 @@ function Login() {
     formState,
     getValues,
     setError,
+    clearErrors,
   } = useForm({
     mode: "onChange",
   });
@@ -50,9 +50,12 @@ function Login() {
       login: { ok, error, token },
     } = data;
     if (!ok) {
-      setError("result", {
+      return setError("result", {
         message: error,
       });
+    }
+    if (token) {
+      logUserIn(token);
     }
   };
   const [login, { loading }] = useMutation(LOGIN_MUTATION, {
@@ -62,10 +65,13 @@ function Login() {
     if (loading) {
       return;
     }
-  const { username, password } = getValues();
+    const { username, password } = getValues();
     login({
       variables: { username, password },
     });
+  };
+  const clearLoginError = () => {
+    clearErrors("result");
   };
   return (
     <AuthLayout>
@@ -83,6 +89,7 @@ function Login() {
                 message: "Username should be longer than 5 chars.",
               },
             })}
+            onChange={clearLoginError}
             name="username"
             type="text"
             placeholder="Username"
@@ -93,6 +100,7 @@ function Login() {
             ref={register({
               required: "Password is required.",
             })}
+            onChange={clearLoginError}
             name="password"
             type="password"
             placeholder="Password"
