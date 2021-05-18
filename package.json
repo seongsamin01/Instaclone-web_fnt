@@ -27,8 +27,7 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node server",
-    "migrate": "npx prisma migrate dev --preview-feature"
+    "dev": "nodemon --exec babel-node server"
   },
   "eslintConfig": {
     "extends": [
