@@ -43,12 +43,13 @@ const CREATE_ACCOUNT_MUTATION = gql`
     }
   }
 `;
-function SingUp() {
+
+function SignUp() {
   const history = useHistory();
   const onCompleted = (data) => {
     const { username, password } = getValues();
     const {
-      createAccount: { ok, error },
+      createAccount: { ok },
     } = data;
     if (!ok) {
       return;
@@ -59,12 +60,15 @@ function SingUp() {
       password,
     });
   };
+
   const [createAccount, { loading }] = useMutation(CREATE_ACCOUNT_MUTATION, {
     onCompleted,
   });
-  const { register, handleSubmit, errors, formState, getValues } = useForm({
+
+  const { register, handleSubmit, formState, getValues } = useForm({
     mode: "onChange",
   });
+
   const onSubmitValid = (data) => {
     if (loading) {
       return;
@@ -75,6 +79,7 @@ function SingUp() {
       },
     });
   };
+
   return (
     <AuthLayout>
       <PageTitle title="Sign up" />
@@ -133,6 +138,7 @@ function SingUp() {
       </FormBox>
       <BottomBox cta="Have an account?" linkText="Log in" link={routes.home} />
     </AuthLayout>
-  );
-}
-export default SingUp;
+    );
+   }
+
+export default SignUp;
